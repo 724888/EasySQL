@@ -98,4 +98,20 @@
     };
 }
 
+- (SqliteMaker *(^)(NSString *))limit {
+    
+    return ^SqliteMaker*(NSString *numberStr) {
+        [_sqlCommand appendFormat:@" limit %@ ",numberStr];
+        return self;
+    };
+}
+
+- (SqliteMaker *(^)(NSString *))resetPrimaryKey {
+    
+    return ^SqliteMaker*(NSString *table) {
+        [_sqlCommand appendFormat:@"update sqlite_sequence set seq=0 where name= '%@'",table];
+        return self;
+    };
+}
+
 @end

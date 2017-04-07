@@ -25,5 +25,8 @@ typedef enum : NSUInteger {
 - (SqliteMaker *(^)(NSString *))from;
 - (SqliteMaker *(^)(NSString *))where;
 - (SqliteMaker *(^)(NSString *key,SqlSortType type))orderBy;
+- (SqliteMaker *(^)(NSString *))limit;
+
+- (SqliteMaker *(^)(NSString *))resetPrimaryKey;
 @end
 
