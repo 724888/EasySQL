@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+@class SqliteMaker;
+
+@protocol SelectNextCommand <NSObject>
+
+- (SqliteMaker *(^)(NSString *))from;
+
+@end
 
 typedef enum : NSUInteger {
     SqlASCSort = 0,
@@ -21,8 +28,8 @@ typedef enum : NSUInteger {
 - (SqliteMaker *(^)(NSString *table,NSArray<NSString *> *))create;
 - (SqliteMaker *(^)(NSString *table,NSDictionary<NSString *,NSString *> *))insert;
 - (SqliteMaker *(^)())delete;
-- (SqliteMaker *(^)(NSArray<NSString *> *))select;
-- (SqliteMaker *(^)(NSString *))from;
+- (SqliteMaker<SelectNextCommand> *(^)(NSArray<NSString *> *))select;
+//- (SqliteMaker *(^)(NSString *))from;
 - (SqliteMaker *(^)(NSString *))where;
 - (SqliteMaker *(^)(NSString *key,SqlSortType type))orderBy;
 - (SqliteMaker *(^)(NSString *))limit;

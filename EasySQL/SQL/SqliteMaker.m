@@ -8,7 +8,7 @@
 
 #import "SqliteMaker.h"
 
-@interface SqliteMaker () {
+@interface SqliteMaker () <SelectNextCommand>{
 
     NSMutableString *_sqlCommand;
 }
@@ -60,7 +60,7 @@
     };
 }
 
-- (SqliteMaker *(^)(NSArray<NSString *> *))select {
+- (SqliteMaker<SelectNextCommand> *(^)(NSArray<NSString *> *))select {
 
     return ^SqliteMaker*(NSArray<NSString *> *commands) {
         NSString *str;
@@ -70,14 +70,6 @@
             str = @" select * ";
         }
         [_sqlCommand appendString:str];
-        return self;
-    };
-}
-
-- (SqliteMaker *(^)(NSString *))from {
-
-    return ^SqliteMaker*(NSString *command) {
-        [_sqlCommand appendFormat:@" from %@ ",command];
         return self;
     };
 }
@@ -110,6 +102,15 @@
     
     return ^SqliteMaker*(NSString *table) {
         [_sqlCommand appendFormat:@"update sqlite_sequence set seq=0 where name= '%@'",table];
+        return self;
+    };
+}
+
+#pragma mark - SelectNextCommand
+- (SqliteMaker *(^)(NSString *))from {
+    
+    return ^SqliteMaker*(NSString *command) {
+        [_sqlCommand appendFormat:@" from %@ ",command];
         return self;
     };
 }
