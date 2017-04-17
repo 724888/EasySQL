@@ -9,6 +9,16 @@
 #import "SqliteManager.h"
 #import "SqliteMaker.h"
 
+@implementation SqliteManager (Common)
+
+- (NSString *)makeSqlCommand:(void(^)(SqliteMaker *))block {
+
+    SqliteMaker *mk = [[SqliteMaker alloc]init];
+    block(mk);
+    return mk.sqlCommand;
+}
+
+@end
 @implementation SqliteManager
 
 NSString *createSql(NSString *table,NSArray<NSString *> *keys) {
